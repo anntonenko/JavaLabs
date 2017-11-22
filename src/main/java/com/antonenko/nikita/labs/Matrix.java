@@ -7,21 +7,31 @@ import java.util.Random;
 public class Matrix {
     //Properties ------------
     private List<List<Integer>> matrix;
+    private Person author;
     // ----------------------
 
     //Initializer -------------------------
-    Matrix() {
+    Matrix(String name, int age, Person.Sex sex) {
         this.matrix = new ArrayList();
+        this.author = new Person(name,age,sex);
     }
     // ------------------------------------
 
-    // Get length -------------
+    // Get -------------
     public int nrow() {
         return matrix.size();
     }
     public int ncol() {
         return matrix.get(0).size();
     }
+    public String getName(){
+        return author.getName();
+    }
+    public int getAge() {
+        return author.getAge();
+    }
+    public List<List<Integer>> getMatrix() { return matrix; }
+    public Person.Sex getSex() { return author.getSex(); }
     // ------------------------
 
     // Print list -------------------------------------
@@ -32,6 +42,7 @@ public class Matrix {
             }
             System.out.println();
         }
+        author.print();
     }
     // --------------------------------------------------
 
@@ -81,4 +92,27 @@ public class Matrix {
     }
     // ------------------------------------------------------
 
+    // Equals -----------------------------------------------
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Matrix matrix1 = (Matrix) o;
+
+        if (nrow() != matrix1.nrow()) return false;
+        if (ncol() != matrix1.ncol()) return false;
+        if (!matrix.equals(matrix1.matrix)) return false;
+        return author.equals(matrix1.author);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nrow();
+        result = 31 * result + ncol();
+        result = 31 * result + matrix.hashCode();
+        result = 31 * result + author.hashCode();
+        return result;
+    }
+    // ------------------------------------------------------
 }
